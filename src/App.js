@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Sidebar from "./components/SideBar/SideBar";
+import Header from "./components/Header/Header";
+import Library from "./components/Librairy/Librairy";
+import Player from "./components/Player/Player";
 
-function App() {
+export default function App() {
+  const [page, setPage] = useState("library");
+  const [currentTrack, setCurrentTrack] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="d-flex vh-100 bg-dark text-white">
+      <Sidebar setPage={setPage} />
+
+      <div className="flex-grow-1 d-flex flex-column">
+        <Header />
+
+        <div className="flex-grow-1 overflow-auto p-3">
+          {page === "library" && <Library setCurrentTrack={setCurrentTrack} />}
+        </div>
+
+        <Player track={currentTrack} />
+      </div>
     </div>
   );
 }
 
-export default App;
